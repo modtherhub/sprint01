@@ -1,0 +1,135 @@
+{
+  "doctor": {
+    "fullName": "",
+    "gender": "",
+    "dateOfBirth": "",
+    "address": "",
+    "contactInformation": {},
+    "shortBiography": "",
+    "medicalLicenseNumber": "",
+    "registryCertificate": "",
+    "specialization": "",
+    "yearsOfExperience": "",
+    "spokenLanguages": "",
+    "consultationType": "",
+    "schedule": "",
+    "consultationFee": ""
+  },
+
+  "pharmacy": {
+    "owner": {
+      "fullName": "",
+      "gender": "",
+      "dateOfBirth": "",
+      "address": "",
+      "contactInformation": {},
+      "ownershipType": "",
+      "admins": {}
+    },
+    "name": "",
+    "licenseNumber": "",
+    "address": "",
+    "contactInfo": {},
+    "workingHours": "",
+    "deliveryOptions": {}
+  },
+  
+  "clinic": {
+    "owner": {
+      "fullName": "",
+      "gender": "",
+      "dateOfBirth": "",
+      "address": "",
+      "contactInformation": {},
+      "ownershipType": "",
+      "admins": {}
+    },
+    "name": "",
+    "licenseNumber": "",
+    "address": "",
+    "contactInfo": {},
+    "workingHours": "",
+    "staff": ""
+  },
+
+  "center": {
+    "owner": {
+      "fullName": "",
+      "gender": "",
+      "dateOfBirth": "",
+      "address": "",
+      "contactInformation": {},
+      "ownershipType": "",
+      "admins": {}
+    },
+    "name": "",
+    "licenseNumber": "",
+    "address": "",
+    "contactInfo": {},
+    "workingHours": "",
+    "departments": {},
+    "staff": {},
+    "afiliatedDoctors": { "fill this with doctor like form data": "" },
+    "operationalData": {
+      "employees": "",
+      "servicePricing": "",
+      "serviceFlowMetrics": ""
+    },
+    "facilityAccreditationDoc": "file",
+    "safetyAndQuslityCertificate": "photo"
+  },
+
+  "hospital": {
+    "owner": {
+      "fullName": "",
+      "gender": "",
+      "dateOfBirth": "",
+      "address": "",
+      "contactInformation": {},
+      "ownershipType": "",
+      "admins": {},
+      "departments": {},
+      "staff": {},
+      "afiliatedDoctors": { "fill this with doctor like form data": "" },
+      "operationalData": {
+        "employees": "",
+        "servicePricing": "",
+        "serviceFlowMetrics": ""
+      },
+      "facilityAccreditationDoc": "file",
+      "safetyAndQuslityCertificate": "photo",
+      "resourceInventory": {
+        "equipments": {},
+        "Beds": ""
+      }
+    },
+    "name": "",
+    "licenseNumber": "",
+    "address": "",
+    "contactInfo": {},
+    "workingHours": ""
+  },
+  
+  "insurance": {
+    "owner": {
+      "fullName": "",
+      "gender": "",
+      "dateOfBirth": "",
+      "address": "",
+      "contactInformation": {},
+      "ownershipType": "",
+      "admins": {}
+    },
+    "name": "",
+    "licenseNumber": "",
+    "address": "",
+    "contactInfo": {},
+    "workingHours": "",
+    "companyProfile": "link",
+    "policies": "",
+    "patientEnrolmentMethods": {},
+    "clamManagement": "",
+    "contractedFacilities": {},
+    "digitalCard": "true or false"
+  }
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Form</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+   <!-- Doctor Form -->
+  <div id="theForm" class="form-container">
+    <h3>Doctor Application</h3>
+    <form id="Application">
+
+        <label for="Name">Full Name</label>
+        <input 
+        type="text" 
+        id="name" 
+        name="Name" 
+        placeholder="Full Name"
+        maxlength="64"
+        required />
+        <span id="nameError" class="error"></span>
+
+        <label for="gender">Gender</label>
+        <select id="gender" required>
+          <option value="">-- Select Gender --</option>
+          <option value="male">Male</option> 
+          <option value="female">Female</option>
+        </select>
+        <span id="genderError" class="error"></span>
+
+        <label for="birthDate">Date of birth</label>
+        <input type="date" 
+        id="birthDate" 
+        name="birthDate" 
+        required />
+
+        <!-- ؤخىفشؤف -->
+        <!-- <label for="email">Email</label>
+<input 
+  type="email" 
+  id="email"
+  name="Email"
+  placeholder="Enter Your Email"
+  required />
+<span id="emailError" class="error"></span> -->
+
+<!-- منطقة لإضافة المزيد -->
+<!-- <div id="optionalFieldsContainer"></div> -->
+
+<!-- زر لإضافة رقم هاتف إضافي -->
+<!-- <button type="button" id="addPhoneBtn" class="addPhoneBtn">+ Add phone number </button> -->
+
+<fieldset id="contactInformationSection">
+  <legend>Contact Information</legend>
+
+  <!-- Email -->
+  <label for="email">Email</label>
+  <input 
+    type="email" 
+    id="email"
+    name="Email"
+    placeholder="Enter Your Email"
+    required />
+  <span id="emailError" class="error"></span>
+
+  <!-- Phone Number -->
+  
+
+  <!-- زر لإضافة رقم هاتف إضافي -->
+  <!-- <button type="button" id="addPhoneBtn" class="addPhoneBtn">+ إضافة رقم هاتف</button> -->
+
+  <!-- منطقة لإضافة المزيد -->
+  <div id="optionalFieldsContainer"></div>
+  <button type="button" id="addPhoneBtn" class="addPhoneBtn">+ Add phone number </button>
+</fieldset>
+
+        <!-- Short Biography -->
+        <label for="bio">Short Biography</label>
+        <textarea 
+          id="bio" 
+          name="shortBiography" 
+          placeholder="Tell us about yourself..." 
+          maxlength="500"
+          rows="4"
+          required>
+        </textarea>
+        <span id="bioError" class="error"></span>
+
+        <!-- Medical License Number -->
+        <label for="license">Medical License Number</label>
+        <input 
+          type="text" 
+          id="license" 
+          name="medicalLicenseNumber" 
+          placeholder="Medical License Number"
+          required />
+        <span id="licenseError" class="error"></span>
+
+        <!-- Registry Certificate -->
+        <label for="certificate">Registry Certificate</label>
+        <input 
+          type="text" 
+          id="certificate" 
+          name="registryCertificate" 
+          placeholder="Registry Certificate"
+          required />
+        <span id="certificateError" class="error"></span>
+
+        <!-- Specialization -->
+        <label for="specialization">Specialization</label>
+        <input 
+          type="text" 
+          id="specialization" 
+          name="specialization" 
+          placeholder="e.g., Dermatology, Cardiology"
+          required />
+        <span id="specializationError" class="error"></span>
+
+        <!-- Years of Experience -->
+        <label for="experience">Years of Experience</label>
+        <input 
+          type="number" 
+          id="experience" 
+          name="yearsOfExperience" 
+          placeholder="e.g., 5"
+          min="0"
+          required />
+        <span id="experienceError" class="error"></span>
+
+        <!-- Spoken Languages -->
+        <label for="languages">Spoken Languages</label>
+        <input 
+          type="text" 
+          id="languages" 
+          name="spokenLanguages" 
+          placeholder="e.g., English, Arabic"
+          required />
+        <span id="languagesError" class="error"></span>
+
+        <!-- Consultation Type -->
+        <label for="consultationType">Consultation Type</label>
+        <select id="consultationType" required>
+          <option value="">-- Select Type --</option>
+          <option value="in_person">In-Person</option>
+          <option value="online">Online</option>
+          <option value="both">Both</option>
+        </select>
+        <span id="consultationTypeError" class="error"></span>
+
+        <!-- Schedule -->
+        <label for="schedule">Schedule</label>
+        <input 
+          type="text" 
+          id="schedule" 
+          name="schedule" 
+          placeholder="e.g., Sun-Wed: 9AM - 1PM"
+          required />
+        <span id="scheduleError" class="error"></span>
+
+        <!-- Consultation Fee -->
+        <label for="fee">Consultation Fee (SDG)</label>
+        <input 
+          type="number" 
+          id="fee" 
+          name="consultationFee" 
+          placeholder="e.g., 500"
+          min="0"
+          required />
+        <span id="feeError" class="error"></span>
+
+
+
+
+
+        <button 
+        type="submit"
+        id="submitBtn" 
+        >
+        Submit Doctor Form
+        </button>
+    </form>
+  </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

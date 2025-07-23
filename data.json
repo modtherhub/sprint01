@@ -1,0 +1,43 @@
+{
+  "full_name": "Ahmed Mohammed",
+  "gender": "male",
+  "birth_date": "1995-07-22",
+  "address": "Dubai, UAE",
+  "contact_information": {
+    "email": "modther@example.com",
+    "phone": "+971501234567"
+  },
+  "pfp": "https://example.com/images/profile.jpg",
+  "password": "super_secure_password",
+  "type": {
+    "doctor": {
+        "Short Biography": "Experienced cardiologist with a passion for patient care and advanced cardiac treatments.",
+        "medical_license_number": "D123456789",
+        "certificate_of_full_registration": "Certified by the UAE Medical Council",
+        "specialization": "Cardiology",
+        "experience_years": 10,
+        "languages_spoken": ["English", "Arabic"],
+        "consultation_types": ["In-person", "Telemedicine"],
+        "schedule": "Monday to Friday, 9 AM to 5 PM",
+        "consultation_fees": 500
+    },
+    "patient": {
+      "medical_history": [
+        {
+            "condition": "Hypertension",
+            "diagnosis_date": "2020-01-15",
+            "treatment": "Medication and lifestyle changes"
+            },
+            {
+            "condition": "Diabetes",
+            "diagnosis_date": "2018-06-10",
+            "treatment": "Insulin therapy and diet management"
+        }
+      ],
+      "allergies": ["Penicillin"]
+    },
+    "owner":{
+
+    }
+  }
+}
