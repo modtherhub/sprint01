@@ -1,11 +1,9 @@
-// انقل الدالة خارج DOMContentLoaded
 let phoneCounter = 0;
 let emailCounter = 1;
 let adminCounter = 1;
 let pharmacyEmailCounter = 1;
 let pharmacyPhoneCounter = 0;
 let deliveryCounter = 0;
-
 
 function createInputField(containerId, type, labelText, placeholder, isRequired, counter) {
   const container = document.getElementById(containerId);
@@ -29,26 +27,29 @@ function createInputField(containerId, type, labelText, placeholder, isRequired,
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-
   const form = document.getElementById('Application');
   if (!form) {
     console.error('Form element not found!');
     return;
   }
 
-  
   // عناصر DOM الأساسية
-  const emailInput = document.getElementById('email');
-  const emailError = document.getElementById('emailError');
+  const ownerEmail = document.getElementById('ownerEmail');
+  const ownerEmailError = document.getElementById('ownerEmailError');
+  const pharmacyEmail = document.getElementById('pharmacyEmail');
+  const pharmacyEmailError = document.getElementById('pharmacyEmailError');
+  const adminEmail = document.getElementById('adminEmail');
+  const adminEmailError = document.getElementById('adminEmailError');
   const genderSelect = document.getElementById('gender');
   const genderError = document.getElementById('genderError');
-  const ownershipSelect = document.getElementById('ownershipType');
+  const ownershipSelect = document.querySelector('select[id=""]'); // تم التصحيح هنا
   const ownershipError = document.getElementById('ownershipError');
-  
+
   // تعريف الحقول مع أسمائها لأغراض التحقق
   const fields = [
-    { id: 'name', name: 'Full Name' },
-    { id: 'birthDate', name: 'Date of Birth' },
+    { id: 'ownerName', name: 'Full Name' },
+    { id: 'ownerBirthDate', name: 'Date of Birth' }, // تم التصحيح هنا
+    { id: 'pharmacyName', name: 'Pharmacy Name' },
     { id: 'license', name: 'License Number' },
     { id: 'address', name: 'Address' },
     { id: 'workingHours', name: 'Working Hours' }
@@ -76,8 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ========== وظائف التحقق ==========
-  
-  // ✅ التحقق من الحقول العادية
   function validateField(input, errorEl, fieldName = 'This field') {
     const value = input.value.trim();
     if (!value) {
@@ -88,37 +87,34 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
-  // ✅ التحقق من البريد الإلكتروني
-  function validateEmail() {
-    const value = emailInput.value.trim();
-    if (!value) return showError(emailInput, emailError, 'Email cannot be empty');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return showError(emailInput, emailError, 'Invalid email format');
-    hideError(emailInput, emailError);
+  function validateEmail(inputEl, errorEl) {
+    const value = inputEl.value.trim();
+    if (!value) return showError(inputEl, errorEl, 'Email cannot be empty');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return showError(inputEl, errorEl, 'Invalid email format');
+    hideError(inputEl, errorEl);
     return true;
   }
 
-  // ✅ التحقق من القوائم المنسدلة
   function validateSelect(select, errorEl, fieldName = 'This field') {
-  try {
-    if (!select || !errorEl) {
-      console.error(`Validation elements not found for ${fieldName}`);
+    try {
+      if (!select || !errorEl) {
+        console.error(`Validation elements not found for ${fieldName}`);
+        return false;
+      }
+      
+      if (!select.value || select.value === "") {
+        showError(select, errorEl, `Please select ${fieldName}`);
+        return false;
+      }
+      
+      hideError(select, errorEl);
+      return true;
+    } catch (error) {
+      console.error(`Error validating ${fieldName}:`, error);
       return false;
     }
-    
-    if (!select.value) {
-      showError(select, errorEl, `Please select ${fieldName}`);
-      return false;
-    }
-    
-    hideError(select, errorEl);
-    return true;
-  } catch (error) {
-    console.error(`Error validating ${fieldName}:`, error);
-    return false;
   }
-}
 
-  // ❌ إظهار رسالة الخطأ
   function showError(input, errorEl, message) {
     errorEl.textContent = message;
     errorEl.style.display = 'block';
@@ -126,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   }
 
-  // ✅ إخفاء رسالة الخطأ
   function hideError(input, errorEl) {
     errorEl.textContent = '';
     errorEl.style.display = 'none';
@@ -143,19 +138,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  emailInput.addEventListener('blur', validateEmail);
-  emailInput.addEventListener('input', validateEmail);
-  genderSelect.addEventListener('change', () => validateSelect(genderSelect, genderError, 'Gender'));
-  ownershipSelect.addEventListener('change', () => validateSelect(ownershipSelect, ownershipError, 'Ownership Type'));
+  if (ownerEmail && ownerEmailError) {
+    ownerEmail.addEventListener('blur', () => validateEmail(ownerEmail, ownerEmailError));
+    ownerEmail.addEventListener('input', () => validateEmail(ownerEmail, ownerEmailError));
+  }
+
+  if (pharmacyEmail && pharmacyEmailError) {
+    pharmacyEmail.addEventListener('blur', () => validateEmail(pharmacyEmail, pharmacyEmailError));
+    pharmacyEmail.addEventListener('input', () => validateEmail(pharmacyEmail, pharmacyEmailError));
+  }
+
+  if (adminEmail && adminEmailError) {
+    adminEmail.addEventListener('blur', () => validateEmail(adminEmail, adminEmailError));
+    adminEmail.addEventListener('input', () => validateEmail(adminEmail, adminEmailError));
+  }
+
+  if (genderSelect && genderError) {
+    genderSelect.addEventListener('change', () => validateSelect(genderSelect, genderError, 'Gender'));
+  }
+
+  if (ownershipSelect && ownershipError) {
+    ownershipSelect.addEventListener('change', () => validateSelect(ownershipSelect, ownershipError, 'Ownership Type'));
+  }
 
   // ========== معالجة الإرسال ==========
-  
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // التحقق من جميع الحقول قبل الإرسال
     let isValid = true;
     
+    // التحقق من الحقول الأساسية
     fields.forEach(({ id, name }) => {
       const input = document.getElementById(id);
       const errorEl = document.getElementById(id + 'Error');
@@ -164,9 +176,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     
-    isValid = validateEmail() && isValid;
-    isValid = validateSelect(genderSelect, genderError, 'Gender') && isValid;
-    isValid = validateSelect(ownershipSelect, ownershipError, 'Ownership Type') && isValid;
+    // التحقق من حقول الإيميل
+    if (ownerEmail && ownerEmailError) {
+      isValid = validateEmail(ownerEmail, ownerEmailError) && isValid;
+    }
+    
+    if (pharmacyEmail && pharmacyEmailError) {
+      isValid = validateEmail(pharmacyEmail, pharmacyEmailError) && isValid;
+    }
+    
+    if (adminEmail && adminEmailError) {
+      isValid = validateEmail(adminEmail, adminEmailError) && isValid;
+    }
+
+    // التحقق من القوائم المنسدلة
+    if (genderSelect && genderError) {
+      isValid = validateSelect(genderSelect, genderError, 'Gender') && isValid;
+    }
+    
+    if (ownershipSelect && ownershipError) {
+      isValid = validateSelect(ownershipSelect, ownershipError, 'Ownership Type') && isValid;
+    }
 
     if (!isValid) {
       alert('Please correct the errors in the form');
@@ -176,38 +206,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // جمع بيانات الصيدلية
     const pharmacyData = {
       owner: {
-        fullName: document.getElementById('name').value,
+        fullName: document.getElementById('ownerName').value,
         gender: genderSelect.value,
-        dateOfBirth: document.getElementById('birthDate').value,
+        dateOfBirth: document.getElementById('ownerBirthDate').value,
         address: document.getElementById('address').value,
         contactInformation: {
-          email: emailInput.value,
+          email: ownerEmail.value,
           phones: getDynamicFieldValues('contactFieldsContainer', 'tel'),
           additionalEmails: getDynamicFieldValues('contactFieldsContainer', 'email')
         },
         ownershipType: ownershipSelect.value,
         admins: getDynamicFieldValues('adminFieldsContainer', 'email')
       },
-      name: document.querySelector('#ownerInformationSection #name').value,
-      licenseNumber: document.getElementById('license').value,
-      address: document.getElementById('address').value,
-      contactInfo: {
-        email: document.querySelector('#pharmacyContactInformation input[type="email"]').value,
-        phones: getDynamicFieldValues('pharmacyContactInformation', 'tel'),
-        additionalEmails: getDynamicFieldValues('pharmacyContactInformation', 'email')
-      },
-      workingHours: document.getElementById('workingHours').value,
-      deliveryOptions: getDynamicFieldValues('deliveryFieldsContainer', 'text')
+      pharmacy: {
+        name: document.getElementById('pharmacyName').value,
+        licenseNumber: document.getElementById('license').value,
+        address: document.getElementById('address').value,
+        contactInfo: {
+          email: pharmacyEmail.value,
+          phones: getDynamicFieldValues('pharmacyContactInformation', 'tel'),
+          additionalEmails: getDynamicFieldValues('pharmacyContactInformation', 'email')
+        },
+        workingHours: document.getElementById('workingHours').value,
+        deliveryOptions: getDynamicFieldValues('deliveryFieldsContainer', 'text')
+      }
     };
 
-    // إنشاء JSON النهائي
-    const jsonData = {
-      pharmacy: pharmacyData
-    };
-
-    console.log("✅ Pharmacy Data:", JSON.stringify(jsonData, null, 2));
+    console.log("✅ Pharmacy Data:", JSON.stringify(pharmacyData, null, 2));
     
-    // تنظيف الفورم بعد الإرسال
     form.reset();
     clearDynamicFields();
     clearValidationStyles();
@@ -216,8 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ========== وظائف مساعدة ==========
-  
-  // الحصول على قيم الحقول الديناميكية
   function getDynamicFieldValues(containerId, type) {
     const container = document.getElementById(containerId);
     if (!container) return [];
@@ -227,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .filter(value => value);
   }
 
-  // مسح الحقول الديناميكية
   function clearDynamicFields() {
     const containers = [
       'contactFieldsContainer',
@@ -242,7 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // مسح أنماط التحقق
   function clearValidationStyles() {
     form.querySelectorAll('.invalid').forEach(el => {
       el.classList.remove('invalid');

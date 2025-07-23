@@ -1,0 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+}
+
+.form-container {
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 5px;
+  background: #f9f9f9;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+fieldset#ownerInformationSection {
+  border: 2px solid #ff0404;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+legend {
+  font-weight: bold;
+  padding: 0 10px;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input,textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  box-sizing: border-box;
+    border: 1px solid #962323;
+  border-radius: calc(infinity * 1px);
+  
+}
+
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+}
+
+select:focus {
+  border-color: #333;
+  outline: none;
+}
+
+/* راسلة التحذير */
+.error {
+    display: none;
+    color: red;
+    font-size: 0.8rem;
+    padding-inline: 5px;
+}
+
+input.invalid {
+  border: 1px solid red;
+}
+
+fieldset#contactInformationSection {
+  border: 2px solid #0af363;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  background-image: linear-gradient(to right, #2999CF, #9A62E8);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: calc(infinity * 1px);
+}
+
+fieldset#ClinicInformationSection {
+  border: 2px solid #1d04ff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+

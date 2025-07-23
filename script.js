@@ -9,29 +9,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const consultationType = document.getElementById('consultationType');
   const consultationTypeError = document.getElementById('consultationTypeError');
 
-  // الحقول الأساسية مع أسمائها بالعربية لأغراض التحقق
+  // Main fields with their names (used for validation)
   const fields = [
-    { id: 'name', name: 'الاسم' },
-    { id: 'phone', name: 'رقم الهاتف' },
-    { id: 'bio', name: 'السيرة الذاتية' },
-    { id: 'license', name: 'رقم الترخيص' },
-    { id: 'certificate', name: 'شهادة التسجيل' },
-    { id: 'specialization', name: 'التخصص' },
-    { id: 'experience', name: 'سنوات الخبرة' },
-    { id: 'languages', name: 'اللغات المتحدث بها' },
-    { id: 'schedule', name: 'الجدول الزمني' },
-    { id: 'fee', name: 'رسوم الاستشارة' },
-    { id: 'birthDate', name: 'تاريخ الميلاد' },
+    { id: 'name', name: 'Full Name' },
+    { id: 'phone', name: 'Phone Number' },
+    { id: 'bio', name: 'Short Biography' },
+    { id: 'license', name: 'License Number' },
+    { id: 'certificate', name: 'Registry Certificate' },
+    { id: 'specialization', name: 'Specialization' },
+    { id: 'experience', name: 'Years of Experience' },
+    { id: 'languages', name: 'Spoken Languages' },
+    { id: 'schedule', name: 'Schedule' },
+    { id: 'fee', name: 'Consultation Fee' },
+    { id: 'birthDate', name: 'Date of Birth' },
   ];
 
-  // 🟢 إعادة تحميل البيانات من التخزين المحلي إن وُجدت
+  // Load saved data from localStorage (if available)
   const savedData = JSON.parse(localStorage.getItem('doctorFormData')) || {};
   for (const [key, value] of Object.entries(savedData)) {
     const field = document.getElementById(key);
     if (field) field.value = value;
   }
 
-  // 🟡 حفظ البيانات إلى localStorage عند الكتابة
+  // Save data to localStorage on input
   form.querySelectorAll('input, textarea, select').forEach(input => {
     input.addEventListener('input', () => {
       const currentData = JSON.parse(localStorage.getItem('doctorFormData')) || {};
@@ -40,16 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 🧹 حذف البيانات عند إرسال الفورم
+  // Clear localStorage on form submission
   form.addEventListener('submit', () => {
     localStorage.removeItem('doctorFormData');
   });
 
-  // ✅ التحقق من الحقول العادية
-  function validateField(input, errorEl, fieldName = 'هذا الحقل') {
+  // Validate normal input fields
+  function validateField(input, errorEl, fieldName = 'This field') {
     const value = input.value.trim();
     if (!value) {
-      showError(input, errorEl, `${fieldName} لا يمكن أن يكون فارغًا`);
+      showError(input, errorEl, `${fieldName} cannot be empty`);
       return false;
     }
     hideError(input, errorEl);
@@ -58,26 +58,26 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
-  // ✅ التحقق من البريد الإلكتروني
+  // Validate email format
   function validateEmail() {
     const value = emailInput.value.trim();
-    if (!value) return showError(emailInput, emailError, 'لا يمكن أن يكون هذا الحقل فارغًا');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return showError(emailInput, emailError, 'البريد الإلكتروني غير صالح');
+    if (!value) return showError(emailInput, emailError, 'Email is required');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return showError(emailInput, emailError, 'Invalid email format');
     hideError(emailInput, emailError);
     return true;
   }
 
-  // ✅ التحقق من القوائم المنسدلة
-  function validateSelect(select, errorEl, fieldName = 'هذا الحقل') {
+  // Validate select (dropdown) inputs
+  function validateSelect(select, errorEl, fieldName = 'This field') {
     if (!select.value) {
-      showError(select, errorEl, `يرجى اختيار ${fieldName}`);
+      showError(select, errorEl, `Please select ${fieldName}`);
       return false;
     }
     hideError(select, errorEl);
     return true;
   }
 
-  // ❌ إظهار رسالة الخطأ
+  // Show error message
   function showError(input, errorEl, message) {
     errorEl.textContent = message;
     errorEl.style.display = 'block';
@@ -85,14 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   }
 
-  // ✅ إخفاء رسالة الخطأ
+  // Hide error message
   function hideError(input, errorEl) {
     errorEl.textContent = '';
     errorEl.style.display = 'none';
     input.classList.remove('invalid');
   }
 
-  // 📱 دعم إضافة أكثر من رقم هاتف
+  // Support adding multiple phone numbers
   let phoneCounter = 1;
   addPhoneBtn.addEventListener('click', () => {
     phoneCounter++;
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     optionalContainer.appendChild(phoneWrapper);
   });
 
-  // ⚙️ تفعيل التحقق عند الكتابة أو فقدان التركيز
+  // Trigger validation on blur and input
   fields.forEach(({ id, name }) => {
     const input = document.getElementById(id);
     const errorEl = document.getElementById(id + 'Error');
@@ -118,22 +118,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   emailInput.addEventListener('blur', validateEmail);
   emailInput.addEventListener('input', validateEmail);
-  genderSelect.addEventListener('change', () => validateSelect(genderSelect, genderError, 'الجنس'));
-  consultationType.addEventListener('change', () => validateSelect(consultationType, consultationTypeError, 'نوع الاستشارة'));
+  genderSelect.addEventListener('change', () => validateSelect(genderSelect, genderError, 'Gender'));
+  consultationType.addEventListener('change', () => validateSelect(consultationType, consultationTypeError, 'Consultation Type'));
 
-  // 📤 معالجة إرسال البيانات
+  // Handle form submission
   form.addEventListener('submit', function (e) {
-    e.preventDefault(); // إيقاف الإرسال التلقائي
+    e.preventDefault(); // Prevent default form submission
 
     const phones = Array.from(document.querySelectorAll('input[name="phone"]'))
       .map(input => input.value.trim())
-      .filter(value => value); // تجاهل الفارغ
+      .filter(value => value); // Ignore empty inputs
 
     const doctorData = {
       fullName: document.getElementById('name').value,
       gender: genderSelect.value,
       dateOfBirth: document.getElementById('birthDate').value,
-      address: "", // يمكن إضافته لاحقًا
+      address: "", // Optional: can be added later
       contactInformation: {
         email: emailInput.value,
         phones
@@ -156,29 +156,27 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("✅ User Data:", JSON.stringify(jsonData, null, 2));
 
     localStorage.removeItem('doctorFormData');
-
     form.reset();
 
+    fields.forEach(({id}) => {
+      const field = document.getElementById(id);
+      if (field) {
+        field.style.backgroundColor = '';
+        field.style.borderColor = '';
+        field.classList.remove('invalid');
+      }
+    });
 
-fields.forEach(({id}) => {
-  const field = document.getElementById(id);
-  if (field) {
-    field.style.backgroundColor = '';
-    field.style.borderColor = '';
-    field.classList.remove('invalid');
-  }
-});
+    emailInput.style.backgroundColor = '';
+    emailInput.style.borderColor = '';
+    emailInput.classList.remove('invalid');
 
-emailInput.style.backgroundColor = '';
-emailInput.style.borderColor = '';
-emailInput.classList.remove('invalid');
+    genderSelect.classList.remove('invalid');
+    consultationType.classList.remove('invalid');
+    genderError.textContent = '';
+    consultationTypeError.textContent = '';
+    emailError.textContent = '';
 
-genderSelect.classList.remove('invalid');
-consultationType.classList.remove('invalid');
-genderError.textContent = '';
-consultationTypeError.textContent = '';
-emailError.textContent = '';
-
-    alert("✅ تم حفظ البيانات! (انظر الكونسول)");
+    alert("Data saved successfully! (Check the console)");
   });
 });

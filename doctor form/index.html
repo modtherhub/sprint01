@@ -16,12 +16,12 @@
             <label for="Name">Full Name</label>
             <input 
             type="text" 
-            id="name" 
+            id="ownerName" 
             name="Name" 
             placeholder="Full Name"
             maxlength="64"
             required />
-            <span id="nameError" class="error"></span>
+            <span id="ownerNameError" class="error"></span>
             
             <label for="gender">Gender</label>
             <select id="gender" required>
@@ -33,7 +33,7 @@
         
             <label for="birthDate">Date of birth</label>
             <input type="date" 
-            id="birthDate" 
+            id="ownerBirthDate" 
             name="birthDate" 
             required />
 
@@ -44,11 +44,11 @@
               <label for="email">Email</label>
               <input 
                 type="email" 
-                id="email"
+                id="ownerEmail"
                 name="Email"
                 placeholder="Enter Your Email"
                 required />
-              <span id="emailError" class="error"></span>
+              <span id="ownerEmailError" class="error"></span>
               <div id="contactFieldsContainer"></div>
               <button type="button" onclick="phoneCounter++; createInputField('contactFieldsContainer', 'tel', 'Phone', '+249 000 000 000', false, phoneCounter)">
                 + Add Phone Number
@@ -72,11 +72,11 @@
               <label for="adminEmail">Enter Admin Email</label>
               <input 
                 type="email" 
-                id="email"
+                id="adminEmail"
                 name="email"
                 placeholder="Enter admins Email"
                 required />
-              <span id="adminsError" class="error"></span>
+              <span id="adminEmailError" class="error"></span>
               <div id="adminFieldsContainer"></div>
               <button type="button" onclick="adminCounter++; createInputField('adminFieldsContainer','email', 'Additional Admin Email', 'Enter Additional Admin email', false, adminCounter)">
                 + Add Admin Email
@@ -91,12 +91,12 @@
             <label for="Name">Pharmacy Name</label>
             <input 
             type="text" 
-            id="name" 
+            id="pharmacyName" 
             name="Name" 
             placeholder="Full Name"
             maxlength="64"
             required />
-            <span id="nameError" class="error"></span>
+            <span id="pharmacyNameError" class="error"></span>
 
             <label for="license">License Number</label>
             <input 
@@ -125,11 +125,11 @@
               <label for="email">Pharmacy Email</label>
               <input 
                 type="email" 
-                id="email"
+                id="pharmacyEmail"
                 name="Email"
                 placeholder="Enter Pharmacy Email"
                 required />
-              <span id="emailError" class="error"></span>
+              <span id="pharmacyEmailError" class="error"></span>
               <div id="pharmacyContactInformation"></div>
               <button type="button" onclick="pharmacyPhoneCounter++; createInputField('pharmacyContactInformation', 'tel', 'Pharmacy Phone', '+249 000 000 000', false, pharmacyPhoneCounter)">
                 + Add Phone Number
@@ -147,17 +147,16 @@
             name="workingHours"
             placeholder="Enter workingHours"
             required />
+            <span id="workingHoursError" class="error"></span>
 
             <fieldset id="contactInformationSection">
                 <legend>Delivery Options</legend>
                 <span id="emailError" class="error"></span>
                 <div id="deliveryFieldsContainer"></div>
                 <button type="button" onclick="deliveryCounter++; createInputField('deliveryFieldsContainer', 'text', 'Delivery Options', 'Delivery Options', false, deliveryCounter)">
-                + Add Email
+                + Add Delivery Options
               </button>
             </fieldset>
-
-
         </fieldset>
        
 
