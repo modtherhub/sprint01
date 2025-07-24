@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main form container -->
+     <div class="form-container" id="theForm">
+        
+        <h3>Medical Center Application</h3>
+        
+        <!-- Start of main application form -->
+        <form id="Application">
+
+            <!-- ===============================
+                 Owner Information Section 
+            =================================== -->
+            <fieldset id="ownerInformationSection">
+                <legend>Owner Medical Center Information</legend>
+                
+                <!-- Owner Full Name Field -->
+                <label for="Name">Full Name</label>
+                <input 
+                    type="text" 
+                    id="ownerName" 
+                    name="Name" 
+                    placeholder="Full Name"
+                    maxlength="64"
+                    required />
+                <span id="ownerNameError" class="error"></span>
+
+                <label for="gender">Gender</label>
+                <select id="gender" required>
+                  <option value="">-- Select Gender --</option>
+                  <option value="male">Male</option> 
+                  <option value="female">Female</option>
+                </select>
+                <span id="genderError" class="error"></span>
+            
+                <label for="birthDate">Date of birth</label>
+                <input type="date" 
+                id="ownerBirthDate" 
+                name="birthDate" 
+                required />
+
+                <label for="address">Owner Address</label>
+                <input 
+                type="text" 
+                id="ownerAddress" 
+                name="address" 
+                placeholder="address"
+                maxlength="64"
+                required />
+                <span id="ownerAddressError" class="error"></span>
+
+                <fieldset id="contactInformationSection">
+                    <legend>Contact Information</legend>    
+                    <!-- Email -->
+                    <label for="email">Email</label>
+                    <input 
+                      type="email" 
+                      id="ownerEmail"
+                      name="Email"
+                      placeholder="Enter Your Email"
+                      required />
+                    <span id="ownerEmailError" class="error"></span>
+                    <div id="contactFieldsContainer"></div>
+                    <button type="button" onclick="phoneCounter++; createInputField('contactFieldsContainer', 'tel', 'Phone', '+249 000 000 000', false, phoneCounter)">
+                      + Add Phone Number
+                    </button>
+                    <button type="button" onclick="emailCounter++; createInputField('contactFieldsContainer', 'email', 'Email', 'example@domain.com', false, emailCounter)">
+                      + Add Email
+                    </button>
+                </fieldset>
+
+                <label for="onwershipType">OwnerShip Type</label>
+                <select name="" id="" required>
+                    <option value="">-- select your Facility type --</option>
+                    <option value="individual">Individual</option>
+                    <option value="company">Company</option>
+                    <option value="group">Group</option>
+                </select>
+                <span id="ownershipError" class="error"></span>
+                
+                <fieldset id="contactInformationSection">
+                <legend>Admins</legend>
+                  <label for="adminEmail">Enter Admin Email</label>
+                  <input 
+                    type="email" 
+                    id="adminEmail"
+                    name="email"
+                    placeholder="Enter admins Email"
+                    required />
+                  <span id="adminEmailError" class="error"></span>
+                  <div id="adminFieldsContainer"></div>
+                  <button type="button" onclick="adminCounter++; createInputField('adminFieldsContainer','email', 'Additional Admin Email', 'Enter Additional Admin email', false, adminCounter)">
+                    + Add Admin Email
+                  </button>
+                </fieldset>
+
+            
+            </fieldset>
+
+
+
+            <!-- ===============================
+                Center Information Section 
+            =================================== -->
+
+            <fieldset id="centerInformationSection">
+                <legend>Medical Center Information</legend>
+                    
+                <label for="Name">Center Name</label>
+                <input 
+                    type="text" 
+                    id="centerName" 
+                    name="Name" 
+                    placeholder="Center Name"
+                    maxlength="64"
+                    required />
+                <span id="centerNameError" class="error"></span>
+
+                <!-- Center License Number -->
+                <label for="license">License Number</label>
+                <input 
+                    type="text" 
+                    id="license" 
+                    name="medicalLicenseNumber" 
+                    placeholder="License Number"
+                    required />
+                <span id="licenseError" class="error"></span>
+
+                <!-- center Address -->
+                <label for="address">Address</label>
+                <input 
+                    type="text" 
+                    id="address" 
+                    name="address" 
+                    placeholder="address"
+                    maxlength="64"
+                    required />
+                <span id="addressError" class="error"></span>
+
+                <!-- Contact Info -->
+                <fieldset id="contactInformationSection">
+                    <legend>Center Contact Information</legend>
+                    <label for="email">Center Email</label>
+                    <input 
+                        type="email" 
+                        id="centerEmail"
+                        name="Email"
+                        placeholder="Enter Pharmacy Email"
+                        required />
+                    <span id="centerEmailError" class="error"></span>
+                    <!-- Dynamic center contact fields area -->
+                    <div id="centerContactInformation"></div>
+                    <!-- Button to add more phone fields -->
+                    <button type="button" onclick="centerPhoneCounter++; createInputField('centerContactInformation', 'tel', 'Phcenter Phone', '+249 000 000 000', false, centerPhoneCounter)">
+                        + Add Phone Number
+                    </button>
+                    <!-- Button to add more email fields -->
+                    <button type="button" onclick="centerEmailCounter++; createInputField('centerContactInformation', 'email', 'Phcenter Email', 'example@domain.com', false, centerEmailCounter)">
+                        + Add Email
+                    </button>
+                </fieldset>
+
+                <!-- Working Hours -->
+                <label for="workingHours">Working Hours</label>
+                <input 
+                    type="number" 
+                    id="workingHours"
+                    name="workingHours"
+                    placeholder="Enter workingHours"
+                    required />
+                <span id="workingHoursError" class="error"></span>
+
+                <!-- Departments -->
+                <fieldset id="contactInformationSection">
+                    <legend>Center Departments</legend>
+                    <label for="departments">Department Name</label>
+                    <input 
+                        type="text" 
+                        id="department"
+                        name="department"
+                        placeholder="e.g., Dental, Cardiology"
+                        required />
+                    <span id="centerEmailError" class="error"></span>
+                    <!-- Dynamic center contact fields area -->
+                    <div id="departmentFields"></div>
+                    <!-- Button to add more phone fields -->
+                    <button type="button" onclick="departmentCounter++; createInputField('departmentFields', 'text', 'Department', 'e.g., Dental, Cardiology', false, departmentCounter)">
+                        + Add Department
+                    </button>
+                </fieldset>
+
+                <fieldset id="contactInformationSection">
+                    <legend>Center Staff</legend>
+                    <label for="departments">Staff Role</label>
+                    <input 
+                        type="text" 
+                        id="staffRole"
+                        name="staffRole"
+                        placeholder="e.g., Doctors, Nurse, Receptionist"
+                        required />
+                    <span id="staffRoleError" class="error"></span>
+                    <!-- Dynamic center contact fields area -->
+                    <div id="staffRoleFields"></div>
+                    <!-- Button to add more phone fields -->
+                    <button type="button" onclick="staffCounter++; createInputField('staffRoleFields', 'text', 'Staff Role', 'e.g., e.g., Doctors, Nurse, Receptionist', false, staffCounter)">
+                        + Add staff
+                    </button>
+                </fieldset>
+
+
+                <fieldset id="contactInformationSection">
+                    <legend>Affiliated Doctors</legend>
+                    <label for="departments">Doctor Name</label>
+                    <input 
+                        type="text" 
+                        id="affiliatedDoctors"
+                        name="affiliatedDoctors"
+                        placeholder="e.g., Dr. Ahmed Youssef, Dr. Sarah Ali"
+                        />
+                    <span id="affiliatedDoctorsError" class="error"></span>
+                    <!-- Dynamic center contact fields area -->
+                    <div id="affiliatedDoctorsFields"></div>
+                    <!-- Button to add more phone fields -->
+                    <button type="button" onclick="affiliatedDoctorsCounter++; createInputField('affiliatedDoctorsFields', 'text', 'Doctor Name', 'e.g., Dr. Ahmed Youssef, Dr. Sarah Ali', false, affiliatedDoctorsCounter)">
+                        + Add Doctor
+                    </button>
+                </fieldset>
+
+                <fieldset id="contactInformationSection">
+                    <legend>Operational Data</legend>
+
+                    <label for="employees">Employee Number</label>
+                    <input 
+                    type="number" 
+                    id="employees" 
+                    name="employees" 
+                    placeholder="35 Employees"
+                    required />
+                    
+                    <label for="servicePricing">Service Pricing</label>
+                    <input 
+                    type="text" 
+                    id="servicePricing" 
+                    name="servicePricing" 
+                    placeholder="e.g., Consultation - $50, X-Ray - $30"
+                    required />
+
+                    <label for="serviceFlowMetrics">Flow Metrics</label>
+                    <input 
+                    type="text" 
+                    id="serviceFlowMetrics" 
+                    name="serviceFlowMetrics" 
+                    placeholder="e.g., Avg. wait time: 15 min, Patients/hour: 10"
+                    required />
+                                  
+
+                </fieldset>
+
+                <label for="facilityAccreditationDoc">Upload Accreditation Document (PDF, DOC, etc.)</label>
+                <input 
+                  type="file" 
+                  id="facilityAccreditationDoc" 
+                  name="facilityAccreditationDoc" 
+                  accept=".pdf,.doc,.docx"
+                  required />
+                <span id="docError" class="error"></span>                        
+                  
+                <label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
+                <input 
+                  type="file" 
+                  id="safetyAndQuslityCertificate" 
+                  name="safetyAndQuslityCertificate" 
+                  accept="image/png, image/jpeg"
+                  required />
+                <span id="imgError" class="error"></span>
+            </fieldset>
+             <!-- ============= End Contact Info (Pharmacy) =========== -->
+
+               
+        </form>
+
+            
+
+     </div>
+    <script src="script.js"></script>
+</body>
+</html>
