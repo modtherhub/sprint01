@@ -10,7 +10,7 @@
     <!-- Main form container -->
      <div class="form-container" id="theForm">
         
-        <h3>Medical Center Application</h3>
+        <h3>Hospital Application</h3>
         
         <!-- Start of main application form -->
         <form id="Application">
@@ -19,7 +19,7 @@
                  Owner Information Section 
             =================================== -->
             <fieldset id="ownerInformationSection">
-                <legend>Owner Medical Center Information</legend>
+                <legend>Hospital Owner Information</legend>
                 
                 <!-- Owner Full Name Field -->
                 <label for="Name">Full Name</label>
@@ -74,13 +74,15 @@
                         data-error="ownerEmailError" />
                     <span id="ownerEmailError" class="error"></span>
                     <div id="contactFieldsContainer"></div>
-                   ء
+                    <button type="button" onclick="phoneCounter++; createInputField('contactFieldsContainer', 'tel', 'Phone', '+249 000 000 000', false, phoneCounter)">
+                      + Add Phone Number
+                    </button>
                     <button type="button" onclick="emailCounter++; createInputField('contactFieldsContainer', 'email', 'Email', 'example@domain.com', false, emailCounter)">
                       + Add Email
                     </button>
                 </fieldset>
 
-                <label for="onwershipType">OwnerShip Type</label>
+                <label for="onwershipType">Ownership Type</label>
                 <select 
                 name="onwershipType" 
                 id="onwershipType" 
@@ -88,7 +90,7 @@
                 data-error="ownershipError" 
                 data-label="Ownership Type"
                 required>
-                    <option value="">-- select your Facility type --</option>
+                    <option value="">-- select Hospital type --</option>
                     <option value="individual">Individual</option>
                     <option value="company">Company</option>
                     <option value="group">Group</option>
@@ -123,17 +125,17 @@
             =================================== -->
 
             <fieldset id="centerInformationSection">
-                <legend>Medical Center Information</legend>
+                <legend>Hospital Information</legend>
                     
-                <label for="Name">Center Name</label>
+                <label for="Name">hospital Name</label>
                 <input 
                     type="text" 
-                    id="centerName" 
+                    id="hospitalName" 
                     name="Name" 
-                    placeholder="Center Name"
+                    placeholder="hospital Name"
                     maxlength="64"
                     required />
-                <span id="centerNameError" class="error"></span>
+                <span id="hospitalNameError" class="error"></span>
 
                 <!-- Center License Number -->
                 <label for="license">License Number</label>
@@ -149,34 +151,34 @@
                 <label for="address">Address</label>
                 <input 
                     type="text" 
-                    id="centerAddress" 
+                    id="hospitalAddress" 
                     name="address" 
                     placeholder="address"
                     maxlength="64"
                     required />
-                <span id="centerAddressError" class="error"></span>
+                <span id="hospitalAddressError" class="error"></span>
 
                 <!-- Contact Info -->
                 <fieldset id="contactInformationSection">
-                    <legend>Center Contact Information</legend>
-                    <label for="email">Center Email</label>
+                    <legend>Hospital Contact Information</legend>
+                    <label for="email">Hospital Email</label>
                     <input 
                         type="email" 
-                        id="centerEmail"
+                        id="hospitalEmail"
                         name="Email"
-                        placeholder="Enter Pharmacy Email"
+                        placeholder="Enter hospital Email"
                         required
                         data-email 
-                        data-error="centerEmailError" /> 
-                    <span id="centerEmailError" class="error"></span>
+                        data-error="hospitalEmailError" /> 
+                    <span id="hospitalEmailError" class="error"></span>
                     <!-- Dynamic center contact fields area -->
-                    <div id="centerContactInformation"></div>
+                    <div id="hospitalContactInformation"></div>
                     <!-- Button to add more phone fields -->
-                    <button type="button" onclick="centerPhoneCounter++; createInputField('centerContactInformation', 'tel', 'Phcenter Phone', '+249 000 000 000', false, centerPhoneCounter)">
+                    <button type="button" onclick="hospitalPhoneCounter++; createInputField('hospitalContactInformation', 'tel', 'hospital Phone', '+249 000 000 000', false, hospitalPhoneCounter)">
                         + Add Phone Number
                     </button>
                     <!-- Button to add more email fields -->
-                    <button type="button" onclick="centerEmailCounter++; createInputField('centerContactInformation', 'email', 'Phcenter Email', 'example@domain.com', false, centerEmailCounter)">
+                    <button type="button" onclick="hospitalEmailCounter++; createInputField('hospitalContactInformation', 'email', 'Phcenter Email', 'example@domain.com', false, hospitalEmailCounter)">
                         + Add Email
                     </button>
                 </fieldset>
@@ -193,7 +195,7 @@
 
                 <!-- Departments -->
                 <fieldset id="contactInformationSection">
-                    <legend>Center Departments</legend>
+                    <legend>Hospital Departments</legend>
                     <label for="departments">Department Name</label>
                     <input 
                         type="text" 
@@ -201,7 +203,7 @@
                         name="department"
                         placeholder="e.g., Dental, Cardiology"
                         required />
-                    <span id="centerEmailError" class="error"></span>
+                    <span id="departmentError" class="error"></span>
                     <!-- Dynamic center contact fields area -->
                     <div id="departmentFields"></div>
                     <!-- Button to add more phone fields -->
@@ -234,11 +236,11 @@
                     <label for="departments">Doctor Name</label>
                     <input 
                         type="text" 
-                        id="affiliatedDoctors"
-                        name="affiliatedDoctors"
+                        id="affiliatedDoctor"
+                        name="affiliatedDoctor"
                         placeholder="e.g., Dr. Ahmed Youssef, Dr. Sarah Ali"
                         />
-                    <span id="affiliatedDoctorsError" class="error"></span>
+                    <span id="affiliatedDoctorError" class="error"></span>
                     <!-- Dynamic center contact fields area -->
                     <div id="affiliatedDoctorsFields"></div>
                     <!-- Button to add more phone fields -->
@@ -257,6 +259,7 @@
                     name="employees" 
                     placeholder="35 Employees"
                     required />
+                    <span id="employeesError" class="error"></span>
                     
                     <label for="servicePricing">Service Pricing</label>
                     <input 
@@ -265,6 +268,7 @@
                     name="servicePricing" 
                     placeholder="e.g., Consultation - $50, X-Ray - $30"
                     required />
+                    <span id="servicePricingError" class="error"></span>
 
                     <label for="serviceFlowMetrics">Flow Metrics</label>
                     <input 
@@ -273,34 +277,65 @@
                     name="serviceFlowMetrics" 
                     placeholder="e.g., Avg. wait time: 15 min, Patients/hour: 10"
                     required />
+                    <span id="serviceFlowMetricsError" class="error"></span>
                                   
 
                 </fieldset>
 
 
                 <label for="facilityAccreditationDoc">Upload Accreditation Document (PDF, DOC, etc.)</label>
-<input 
-  type="file" 
-  id="facilityAccreditationDoc" 
-  name="facilityAccreditationDoc" 
-  data-file 
-  data-error="docError" 
-  data-label="Accreditation Document"
-  data-allowed="pdf,doc,docx"
-  required />
-<span id="docError" class="error"></span>
+                <input 
+                  type="file" 
+                  id="facilityAccreditationDoc" 
+                  name="facilityAccreditationDoc" 
+                  data-file 
+                  data-error="docError" 
+                  data-label="Accreditation Document"
+                  data-allowed="pdf,doc,docx"
+                  required />
+                <span id="docError" class="error"></span>
 
-<label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
-<input 
-  type="file" 
-  id="safetyAndQuslityCertificate" 
-  name="safetyAndQuslityCertificate" 
-  data-file 
-  data-error="imgError" 
-  data-label="Certificate Image"
-  data-allowed="jpg,jpeg,png"
-  required />
-<span id="imgError" class="error"></span>
+                <label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
+                <input 
+                  type="file" 
+                  id="safetyAndQuslityCertificate" 
+                  name="safetyAndQuslityCertificate" 
+                  data-file 
+                  data-error="imgError" 
+                  data-label="Certificate Image"
+                  data-allowed="jpg,jpeg,png"
+                  required />
+                <span id="imgError" class="error"></span>
+
+                <fieldset id="contactInformationSection">
+                    <legend>Resource Inventory</legend>
+
+                    <label for="equipment">Equipments Name</label>
+                    <input 
+                        type="text" 
+                        id="equipment"
+                        name="equipment"
+                        placeholder="e.g., X-ray machine"
+                        />
+                    <span id="equipmentsError" class="error"></span>
+                    <!-- Dynamic center contact fields area -->
+                    <div id="equipmentsFields"></div>
+                    <!-- Button to add more phone fields -->
+                   <button 
+                      type="button" 
+                      onclick="equipmentCounter++; createInputField('equipmentsFields', 'text', 'Equipment', 'e.g.: X-ray machine', true, equipmentCounter)">
+                      + Add Equipment
+                    </button>
+                </fieldset>
+
+                <label for="beds">Beds Number</label>
+                <input 
+                    type="number" 
+                    id="beds" 
+                    name="bedsNumber" 
+                    placeholder="beds Number"
+                    required />
+                <span id="bedsError" class="error"></span>
                
             </fieldset>
              <!-- ============= End Contact Info (Center) =========== -->
@@ -312,30 +347,7 @@
 
      </div>
     <script src="script.js"></script>
+    <script src="/global function/createInputfilde.js"></script>
+    <script src="/global function/validationfunction.js"></script>
 </body>
 </html>
-
-
-<!--  <label for="facilityAccreditationDoc">Upload Accreditation Document (PDF, DOC, etc.)</label>
-                <input 
-                  type="file" 
-                  id="facilityAccreditationDoc" 
-                  name="facilityAccreditationDoc" 
-                  data-file 
-  data-error="docError" 
-  data-label="Accreditation Document"
-  data-allowed="pdf,doc,docx"
-                  required />
-                <span id="docError" class="error"></span>                        
-                  
-                <label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
-                <input 
-                  type="file" 
-                  id="safetyAndQuslityCertificate" 
-                  name="safetyAndQuslityCertificate" 
-                  data-file 
-  data-error="imgError" 
-  data-label="Certificate Image"
-  data-allowed="jpg,jpeg,png"
-                  required />
-                <span id="imgError" class="error"></span> -->
