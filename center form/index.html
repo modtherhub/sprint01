@@ -33,7 +33,11 @@
                 <span id="ownerNameError" class="error"></span>
 
                 <label for="gender">Gender</label>
-                <select id="gender" required>
+                <select id="gender" 
+                data-select 
+                data-error="genderError" 
+                data-label="Gender"
+                required>
                   <option value="">-- Select Gender --</option>
                   <option value="male">Male</option> 
                   <option value="female">Female</option>
@@ -65,7 +69,9 @@
                       id="ownerEmail"
                       name="Email"
                       placeholder="Enter Your Email"
-                      required />
+                      required
+                      data-email 
+                        data-error="ownerEmailError" />
                     <span id="ownerEmailError" class="error"></span>
                     <div id="contactFieldsContainer"></div>
                     <button type="button" onclick="phoneCounter++; createInputField('contactFieldsContainer', 'tel', 'Phone', '+249 000 000 000', false, phoneCounter)">
@@ -77,7 +83,13 @@
                 </fieldset>
 
                 <label for="onwershipType">OwnerShip Type</label>
-                <select name="" id="" required>
+                <select 
+                name="onwershipType" 
+                id="onwershipType" 
+                data-select 
+                data-error="ownershipError" 
+                data-label="Ownership Type"
+                required>
                     <option value="">-- select your Facility type --</option>
                     <option value="individual">Individual</option>
                     <option value="company">Company</option>
@@ -93,7 +105,9 @@
                     id="adminEmail"
                     name="email"
                     placeholder="Enter admins Email"
-                    required />
+                    required
+                    data-email 
+                        data-error="adminEmailError" /> 
                   <span id="adminEmailError" class="error"></span>
                   <div id="adminFieldsContainer"></div>
                   <button type="button" onclick="adminCounter++; createInputField('adminFieldsContainer','email', 'Additional Admin Email', 'Enter Additional Admin email', false, adminCounter)">
@@ -137,12 +151,12 @@
                 <label for="address">Address</label>
                 <input 
                     type="text" 
-                    id="address" 
+                    id="centerAddress" 
                     name="address" 
                     placeholder="address"
                     maxlength="64"
                     required />
-                <span id="addressError" class="error"></span>
+                <span id="centerAddressError" class="error"></span>
 
                 <!-- Contact Info -->
                 <fieldset id="contactInformationSection">
@@ -153,7 +167,9 @@
                         id="centerEmail"
                         name="Email"
                         placeholder="Enter Pharmacy Email"
-                        required />
+                        required
+                        data-email 
+                        data-error="centerEmailError" /> 
                     <span id="centerEmailError" class="error"></span>
                     <!-- Dynamic center contact fields area -->
                     <div id="centerContactInformation"></div>
@@ -263,27 +279,35 @@
 
                 </fieldset>
 
+
                 <label for="facilityAccreditationDoc">Upload Accreditation Document (PDF, DOC, etc.)</label>
-                <input 
-                  type="file" 
-                  id="facilityAccreditationDoc" 
-                  name="facilityAccreditationDoc" 
-                  accept=".pdf,.doc,.docx"
-                  required />
-                <span id="docError" class="error"></span>                        
-                  
-                <label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
-                <input 
-                  type="file" 
-                  id="safetyAndQuslityCertificate" 
-                  name="safetyAndQuslityCertificate" 
-                  accept="image/png, image/jpeg"
-                  required />
-                <span id="imgError" class="error"></span>
+<input 
+  type="file" 
+  id="facilityAccreditationDoc" 
+  name="facilityAccreditationDoc" 
+  data-file 
+  data-error="docError" 
+  data-label="Accreditation Document"
+  data-allowed="pdf,doc,docx"
+  required />
+<span id="docError" class="error"></span>
+
+<label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
+<input 
+  type="file" 
+  id="safetyAndQuslityCertificate" 
+  name="safetyAndQuslityCertificate" 
+  data-file 
+  data-error="imgError" 
+  data-label="Certificate Image"
+  data-allowed="jpg,jpeg,png"
+  required />
+<span id="imgError" class="error"></span>
+               
             </fieldset>
              <!-- ============= End Contact Info (Pharmacy) =========== -->
 
-               
+            <button class="buttonflex" type="submit">Submit Facility Owner Form</button>
         </form>
 
             
@@ -292,3 +316,28 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+<!--  <label for="facilityAccreditationDoc">Upload Accreditation Document (PDF, DOC, etc.)</label>
+                <input 
+                  type="file" 
+                  id="facilityAccreditationDoc" 
+                  name="facilityAccreditationDoc" 
+                  data-file 
+  data-error="docError" 
+  data-label="Accreditation Document"
+  data-allowed="pdf,doc,docx"
+                  required />
+                <span id="docError" class="error"></span>                        
+                  
+                <label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
+                <input 
+                  type="file" 
+                  id="safetyAndQuslityCertificate" 
+                  name="safetyAndQuslityCertificate" 
+                  data-file 
+  data-error="imgError" 
+  data-label="Certificate Image"
+  data-allowed="jpg,jpeg,png"
+                  required />
+                <span id="imgError" class="error"></span> -->

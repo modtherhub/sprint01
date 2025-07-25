@@ -1,8 +1,53 @@
 // ======================
-// Global Counters
+// Helper Functions
 // ======================
 
-// Track the number of dynamic fields for different categories (phones, emails, admins, etc.)
+function arrayToObject(arr) {
+    return arr.reduce((obj, item, index) => {
+        obj[`item${index + 1}`] = item;
+        return obj;
+    }, {});
+}
+
+function getDynamicFieldValues(containerId, type) {
+    const container = document.getElementById(containerId);
+    if (!container) return [];
+    return Array.from(container.querySelectorAll(`input[type="${type}"]`))
+      .map(input => input.value.trim())
+      .filter(value => value);
+}
+
+function clearDynamicFields() {
+    const containers = [
+      'contactFieldsContainer',
+      'adminFieldsContainer',
+      'centerContactInformation',
+      'departmentFields',
+      'staffRoleFields',
+      'affiliatedDoctorsFields'
+    ];
+    containers.forEach(id => {
+      const container = document.getElementById(id);
+      if (container) container.innerHTML = '';
+    });
+}
+
+function clearValidationStyles() {
+    const form = document.getElementById('Application');
+    form.querySelectorAll('.invalid').forEach(el => {
+      el.classList.remove('invalid');
+    });
+    form.querySelectorAll('.error').forEach(el => {
+      if (el) {
+        el.textContent = '';
+        el.style.display = 'none';
+      }
+    });
+}
+
+// ======================
+// Global Counters
+// ======================
 let phoneCounter = 0;
 let emailCounter = 1;
 let adminCounter = 1;
@@ -16,25 +61,14 @@ let affiliatedDoctorsCounter = 1;
 // ========================================
 // Function to Dynamically Create Input Fields
 // ========================================
-
-/**
- * Creates and appends a new input field inside the specified container.
- * Used for adding phone numbers, emails, etc. dynamically.
- * @param {string} containerId - The container element's ID.
- * @param {string} type - Input type (e.g., 'email', 'tel', 'text').
- * @param {string} labelText - Label text for the field.
- * @param {string} placeholder - Placeholder text for the field.
- * @param {boolean} isRequired - Whether the field is required.
- * @param {number} counter - Counter for unique field id/naming.
- */
-
 function createInputField(containerId, type, labelText, placeholder, isRequired, counter) {
   const container = document.getElementById(containerId);
+  if (!container) return;
+  
   const fieldId = `${type}${counter}`;
   const fieldWrapper = document.createElement('div');
   fieldWrapper.classList.add('field-entry'); 
   
-  // Structure of the input field (label, input, remove button)
   fieldWrapper.innerHTML = `
     <label for="${fieldId}">${labelText}</label>
     <input 
@@ -46,5 +80,335 @@ function createInputField(containerId, type, labelText, placeholder, isRequired,
     <button type="button" class="removeBtn" onclick="this.parentNode.remove()">Remove</button>
   `;
   container.appendChild(fieldWrapper);
-
 }
+
+// ==================================
+// Validation Functions
+// ==================================
+function showError(input, errorEl, message) {
+    if (!errorEl) {
+      console.error('Error element not found for:', input);
+      return false;
+    }
+    errorEl.textContent = message;
+    errorEl.style.display = 'block';
+    input?.classList.add('invalid');
+    return false;
+}
+
+function hideError(input, errorEl) {
+    if (!errorEl) return;
+    errorEl.textContent = '';
+    errorEl.style.display = 'none';
+    input?.classList.remove('invalid');
+}
+
+function validateField(input, errorEl, fieldName = 'This field') {
+    if (!input || !errorEl) {
+      console.error(`Validation elements not found for ${fieldName}`);
+      return false;
+    }
+    const value = input.value.trim();
+    if (!value) {
+      showError(input, errorEl, `${fieldName} cannot be empty`);
+      return false;
+    }
+    hideError(input, errorEl);
+    return true;
+}
+
+function validateEmail(inputEl, errorEl) {
+    if (!inputEl || !errorEl) {
+      console.error('Email validation elements not found');
+      return false;
+    }
+    const value = inputEl.value.trim();
+    if (!value) return showError(inputEl, errorEl, 'Email cannot be empty');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      return showError(inputEl, errorEl, 'Invalid email format');
+    }
+    hideError(inputEl, errorEl);
+    return true;
+}
+
+function validateSelect(select, errorEl, fieldName = 'This field') {
+    if (!select || !errorEl) {
+      console.error(`Validation elements not found for ${fieldName}`);
+      return false;
+    }
+    if (!select.value || select.value === "") {
+      showError(select, errorEl, `Please select ${fieldName}`);
+      return false;
+    }
+    hideError(select, errorEl);
+    return true;
+}
+
+function setupEmailValidation() {
+  const emailInputs = document.querySelectorAll('[data-email]');
+  emailInputs.forEach((inputEl) => {
+    const errorId = inputEl.dataset.error;
+    const errorEl = document.getElementById(errorId);
+
+    if (!errorEl) {
+      console.warn(`Error element with ID "${errorId}" not found`);
+      return;
+    }
+
+    const validate = () => validateEmail(inputEl, errorEl);
+    inputEl.addEventListener('blur', validate);
+    inputEl.addEventListener('input', validate);
+  });
+}
+
+function setupSelectValidation() {
+  const selectInputs = document.querySelectorAll('[data-select]');
+  
+  selectInputs.forEach((selectEl) => {
+    const errorId = selectEl.dataset.error;
+    const fieldName = selectEl.dataset.label || 'This field';
+    const errorEl = document.getElementById(errorId);
+
+    if (!errorEl) {
+      console.warn(`Error element with ID "${errorId}" not found`);
+      return;
+    }
+
+    const validate = () => validateSelect(selectEl, errorEl, fieldName);
+    selectEl.addEventListener('change', validate);
+    selectEl.addEventListener('blur', validate);
+  });
+}
+
+// ======================
+// File Validation Functions
+// ======================
+
+function validateFile(inputEl, errorEl, allowedTypes) {
+    if (!inputEl || !errorEl) {
+        console.error('File validation elements not found');
+        return false;
+    }
+
+    const file = inputEl.files[0];
+    if (!file) {
+        return showError(inputEl, errorEl, 'Please select a file');
+    }
+
+    const fileExt = file.name.split('.').pop().toLowerCase();
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (!allowedTypes.includes(fileExt)) {
+        return showError(inputEl, errorEl, `Only ${allowedTypes.join(', ')} files are allowed`);
+    }
+
+    if (file.size > maxSize) {
+        return showError(inputEl, errorEl, 'File size should not exceed 5MB');
+    }
+
+    hideError(inputEl, errorEl);
+    return true;
+}
+
+function setupFileValidation() {
+    const fileInputs = document.querySelectorAll('[data-file]');
+    
+    fileInputs.forEach(inputEl => {
+        const errorId = inputEl.dataset.error;
+        const errorEl = document.getElementById(errorId);
+        const allowedTypes = inputEl.dataset.allowed.split(',').map(t => t.trim());
+
+        if (!errorEl) {
+            console.warn(`Error element with ID "${errorId}" not found`);
+            return;
+        }
+
+        const validate = () => validateFile(inputEl, errorEl, allowedTypes);
+        inputEl.addEventListener('change', validate);
+        inputEl.addEventListener('blur', validate);
+    });
+}
+
+// ==================================
+// Main Form Setup
+// ==================================
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('Application');
+  if (!form) {
+    console.error('Form element not found!');
+    return;
+  }
+
+  // Fields to validate
+  const fields = [
+    { id: 'ownerName', name: 'Full Name' },
+    { id: 'ownerBirthDate', name: 'Date of Birth' },
+    { id: 'ownerAddress', name: 'Owner Address' },
+    { id: 'centerName', name: 'Center Name' },
+    { id: 'license', name: 'License Number' },
+    { id: 'centerAddress', name: 'Address' },
+    { id: 'workingHours', name: 'Working Hours' },
+    { id: 'employees', name: 'Employee Number' },
+    { id: 'servicePricing', name: 'Service Pricing' },
+    { id: 'serviceFlowMetrics', name: 'Flow Metrics' },
+    { id: 'department', name: 'Department Name' },
+    { id: 'staffRole', name: 'Staff Role' }
+  ];
+
+  // Restore form data from localStorage
+  const savedData = JSON.parse(localStorage.getItem('mCenterFormData')) || {};
+  for (const [key, value] of Object.entries(savedData)) {
+    const field = document.getElementById(key);
+    if (field) field.value = value;
+  }
+
+  // Save form data to localStorage
+  form.querySelectorAll('input, select').forEach(input => {
+    input.addEventListener('input', () => {
+      const currentData = JSON.parse(localStorage.getItem('mCenterFormData')) || {};
+      currentData[input.id] = input.value;
+      localStorage.setItem('mCenterFormData', JSON.stringify(currentData));
+    });
+  });
+
+  // Setup field validations
+  fields.forEach(({ id, name }) => {
+    const input = document.getElementById(id);
+    const errorEl = document.getElementById(id + 'Error');
+    if (input && errorEl) {
+      input.addEventListener('blur', () => validateField(input, errorEl, name));
+      input.addEventListener('input', () => validateField(input, errorEl, name));
+    }
+  });
+
+  // Setup email and select validations
+  setupEmailValidation();
+  setupSelectValidation();
+  setupFileValidation();
+
+  // Form submission handler
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    let isValid = true;
+
+    // Validate all fields
+    fields.forEach(({ id, name }) => {
+      const input = document.getElementById(id);
+      const errorEl = document.getElementById(id + 'Error');
+      if (input && errorEl) {
+        isValid = validateField(input, errorEl, name) && isValid;
+      }
+    });
+
+    // Validate all email fields
+    document.querySelectorAll('[data-email]').forEach(inputEl => {
+      const errorId = inputEl.dataset.error;
+      const errorEl = document.getElementById(errorId);
+      if (inputEl && errorEl) {
+        isValid = validateEmail(inputEl, errorEl) && isValid;
+      }
+    });
+
+    // Validate all select fields
+    document.querySelectorAll('[data-select]').forEach(selectEl => {
+      const errorId = selectEl.dataset.error;
+      const fieldName = selectEl.dataset.label || 'This field';
+      const errorEl = document.getElementById(errorId);
+      if (selectEl && errorEl) {
+        isValid = validateSelect(selectEl, errorEl, fieldName) && isValid;
+      }
+    });
+
+
+  const fileFields = [
+    { 
+        inputId: 'facilityAccreditationDoc', 
+        errorId: 'docError',
+        allowed: ['pdf', 'doc', 'docx']
+    },
+    { 
+        inputId: 'safetyAndQuslityCertificate', 
+        errorId: 'imgError',
+        allowed: ['jpg', 'jpeg', 'png']
+    }
+];
+
+  fileFields.forEach(({ inputId, errorId, allowed }) => {
+    const inputEl = document.getElementById(inputId);
+    const errorEl = document.getElementById(errorId);
+            if (inputEl && errorEl) {
+                isValid = validateFile(inputEl, errorEl, allowed) && isValid;
+            }
+        });
+
+
+    if (!isValid) {
+      const firstError = document.querySelector('.invalid');
+      if (firstError) {
+        firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
+        firstError.focus();
+      }
+      alert("⚠️ يوجد أخطاء في تعبئة البيانات — يرجى مراجعة الحقول باللون الأحمر.");
+      return;
+    }
+
+    // Prepare form data
+   const centerData = {
+  Center: {
+    owner: {
+      fullName: document.getElementById('ownerName')?.value || '',
+      gender: document.getElementById('gender')?.value || '',
+      dateOfBirth: document.getElementById('ownerBirthDate')?.value || '',
+      address: document.getElementById('ownerAddress')?.value || '',
+      contactInformation: {
+        email: document.getElementById('ownerEmail')?.value || '',
+        phones: arrayToObject(getDynamicFieldValues('contactFieldsContainer', 'tel')),
+        additionalEmails: arrayToObject(getDynamicFieldValues('contactFieldsContainer', 'email'))
+      },
+      ownershipType: document.getElementById('onwershipType')?.value || '',
+      admins: arrayToObject(getDynamicFieldValues('adminFieldsContainer', 'email'))
+    },
+    name: document.getElementById('centerName')?.value || '',
+    licenseNumber: document.getElementById('license')?.value || '',
+    address: document.getElementById('centerAddress')?.value || '',
+    contactInfo: {
+      email: document.getElementById('centerEmail')?.value || '',
+      phones: arrayToObject(getDynamicFieldValues('centerContactInformation', 'tel')),
+      additionalEmails: arrayToObject(getDynamicFieldValues('centerContactInformation', 'email'))
+    },
+    workingHours: document.getElementById('workingHours')?.value || '',
+    departments: arrayToObject(getDynamicFieldValues('departmentFields', 'text')),
+    staff: arrayToObject(getDynamicFieldValues('staffRoleFields', 'text')),
+    afiliatedDoctors: arrayToObject(getDynamicFieldValues('affiliatedDoctorsFields', 'text')),
+    operationalData: {
+      employees: document.getElementById('employees')?.value || '',
+      servicePricing: document.getElementById('servicePricing')?.value || '',
+      serviceFlowMetrics: document.getElementById('serviceFlowMetrics')?.value || ''
+    },
+    documents: {
+      accreditationDoc: document.getElementById('facilityAccreditationDoc')?.files[0] ? {
+        name: document.getElementById('facilityAccreditationDoc').files[0].name,
+        type: document.getElementById('facilityAccreditationDoc').files[0].type,
+        size: document.getElementById('facilityAccreditationDoc').files[0].size,
+        lastModified: document.getElementById('facilityAccreditationDoc').files[0].lastModified
+      } : null,
+      qualityCertificate: document.getElementById('safetyAndQuslityCertificate')?.files[0] ? {
+        name: document.getElementById('safetyAndQuslityCertificate').files[0].name,
+        type: document.getElementById('safetyAndQuslityCertificate').files[0].type,
+        size: document.getElementById('safetyAndQuslityCertificate').files[0].size,
+        lastModified: document.getElementById('safetyAndQuslityCertificate').files[0].lastModified
+      } : null
+    }
+  }
+    };
+
+    console.log("✅ Center Data:", JSON.stringify(centerData, null, 2));
+    
+    // Clean up after submission
+    form.reset();
+    clearDynamicFields();
+    clearValidationStyles();
+    localStorage.removeItem('mCenterFormData');
+    alert("✅ تم إرسال النموذج بنجاح! (راجع الكونسول)");
+  });
+});
