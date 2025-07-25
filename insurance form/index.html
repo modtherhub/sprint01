@@ -10,7 +10,7 @@
     <!-- Main form container -->
      <div class="form-container" id="theForm">
         
-        <h3>Medical Center Application</h3>
+        <h3>Insurance Application</h3>
         
         <!-- Start of main application form -->
         <form id="Application">
@@ -19,7 +19,7 @@
                  Owner Information Section 
             =================================== -->
             <fieldset id="ownerInformationSection">
-                <legend>Owner Medical Center Information</legend>
+                <legend>Insurance Company Owner Information</legend>
                 
                 <!-- Owner Full Name Field -->
                 <label for="Name">Full Name</label>
@@ -74,9 +74,7 @@
                         data-error="ownerEmailError" />
                     <span id="ownerEmailError" class="error"></span>
                     <div id="contactFieldsContainer"></div>
-                    <button type="button" onclick="phoneCounter++; createInputField('contactFieldsContainer', 'tel', 'Phone', '+249 000 000 000', false, phoneCounter)">
-                      + Add Phone Number
-                    </button>
+                   ء
                     <button type="button" onclick="emailCounter++; createInputField('contactFieldsContainer', 'email', 'Email', 'example@domain.com', false, emailCounter)">
                       + Add Email
                     </button>
@@ -125,17 +123,17 @@
             =================================== -->
 
             <fieldset id="centerInformationSection">
-                <legend>Medical Center Information</legend>
+                <legend>insurance Information</legend>
                     
-                <label for="Name">Center Name</label>
+                <label for="Name">insurance Name</label>
                 <input 
                     type="text" 
-                    id="centerName" 
+                    id="insuranceName" 
                     name="Name" 
-                    placeholder="Center Name"
+                    placeholder="insurance Name"
                     maxlength="64"
                     required />
-                <span id="centerNameError" class="error"></span>
+                <span id="insuranceNameError" class="error"></span>
 
                 <!-- Center License Number -->
                 <label for="license">License Number</label>
@@ -147,16 +145,16 @@
                     required />
                 <span id="licenseError" class="error"></span>
 
-                <!-- center Address -->
+                <!-- insurance Address -->
                 <label for="address">Address</label>
                 <input 
                     type="text" 
-                    id="centerAddress" 
+                    id="insuranceAddress" 
                     name="address" 
                     placeholder="address"
                     maxlength="64"
                     required />
-                <span id="centerAddressError" class="error"></span>
+                <span id="insuranceAddressError" class="error"></span>
 
                 <!-- Contact Info -->
                 <fieldset id="contactInformationSection">
@@ -164,21 +162,21 @@
                     <label for="email">Center Email</label>
                     <input 
                         type="email" 
-                        id="centerEmail"
+                        id="insuranceEmail"
                         name="Email"
-                        placeholder="Enter Pharmacy Email"
+                        placeholder="Enter insurance Email"
                         required
                         data-email 
-                        data-error="centerEmailError" /> 
-                    <span id="centerEmailError" class="error"></span>
+                        data-error="insuranceEmailError" /> 
+                    <span id="insuranceEmailError" class="error"></span>
                     <!-- Dynamic center contact fields area -->
-                    <div id="centerContactInformation"></div>
+                    <div id="insuranceContactInformation"></div>
                     <!-- Button to add more phone fields -->
-                    <button type="button" onclick="centerPhoneCounter++; createInputField('centerContactInformation', 'tel', 'Phcenter Phone', '+249 000 000 000', false, centerPhoneCounter)">
+                    <button type="button" onclick="insurancePhoneCounter++; createInputField('insuranceContactInformation', 'tel', 'Phcenter Phone', '+249 000 000 000', false, insurancePhoneCounter)">
                         + Add Phone Number
                     </button>
                     <!-- Button to add more email fields -->
-                    <button type="button" onclick="centerEmailCounter++; createInputField('centerContactInformation', 'email', 'Phcenter Email', 'example@domain.com', false, centerEmailCounter)">
+                    <button type="button" onclick="insuranceEmailCounter++; createInputField('insuranceContactInformation', 'email', 'Phcenter Email', 'example@domain.com', false, insuranceEmailCounter)">
                         + Add Email
                     </button>
                 </fieldset>
@@ -193,116 +191,87 @@
                     required />
                 <span id="workingHoursError" class="error"></span>
 
-                <!-- Departments -->
-                <fieldset id="contactInformationSection">
-                    <legend>Center Departments</legend>
-                    <label for="departments">Department Name</label>
-                    <input 
-                        type="text" 
-                        id="department"
-                        name="department"
-                        placeholder="e.g., Dental, Cardiology"
-                        required />
-                    <span id="centerEmailError" class="error"></span>
-                    <!-- Dynamic center contact fields area -->
-                    <div id="departmentFields"></div>
-                    <!-- Button to add more phone fields -->
-                    <button type="button" onclick="departmentCounter++; createInputField('departmentFields', 'text', 'Department', 'e.g., Dental, Cardiology', false, departmentCounter)">
-                        + Add Department
-                    </button>
-                </fieldset>
+               
+                
+                <label for="companyProfile">Comapany Profile</label>
+                <input 
+                    type="text" 
+                    id="companyProfile"
+                    name="companyProfile"
+                    placeholder=""
+                    required />
+                <span id="companyProfileError" class="error"></span>
+
+                <label for="policies">Policies</label>
+                <input 
+                    type="text" 
+                    id="policies"
+                    name="policies"
+                    placeholder="policies"
+                    required />
+                <span id="policiesError" class="error"></span>
+                   
+                
 
                 <fieldset id="contactInformationSection">
-                    <legend>Center Staff</legend>
-                    <label for="departments">Staff Role</label>
+                    <legend>patientEnrolmentMethods</legend>
+                    <label for="departments">patientEnrolmentMethods</label>
                     <input 
                         type="text" 
-                        id="staffRole"
-                        name="staffRole"
+                        id="enrolmentMethods"
+                        name="patientEnrolmentMethods"
                         placeholder="e.g., Doctors, Nurse, Receptionist"
                         required />
-                    <span id="staffRoleError" class="error"></span>
+                    <span id="enrolmentMethodsError" class="error"></span>
                     <!-- Dynamic center contact fields area -->
-                    <div id="staffRoleFields"></div>
+                    <div id="enrolmentMethodsFields"></div>
                     <!-- Button to add more phone fields -->
-                    <button type="button" onclick="staffCounter++; createInputField('staffRoleFields', 'text', 'Staff Role', 'e.g., e.g., Doctors, Nurse, Receptionist', false, staffCounter)">
-                        + Add staff
+                    <button type="button" onclick="staffCounter++; createInputField('enrolmentMethodsFields', 'text', 'Staff Role', 'e.g., e.g., Doctors, Nurse, Receptionist', false, staffCounter)">
+                        + Enrolment Methods
                     </button>
                 </fieldset>
 
+                <label for="clamManagement">Clam Management</label>
+                <input 
+                    type="text" 
+                    id="clamManagement"
+                    name="clamManagement"
+                    placeholder="clamManagement"
+                    required />
+                <span id="clamManagementError" class="error"></span>
+
 
                 <fieldset id="contactInformationSection">
-                    <legend>Affiliated Doctors</legend>
-                    <label for="departments">Doctor Name</label>
+                    <legend>Contracted Facilities</legend>
+                    <label for="contractedFacilities">Contracted Facilities Name</label>
                     <input 
                         type="text" 
-                        id="affiliatedDoctors"
-                        name="affiliatedDoctors"
+                        id="contractedFacilities"
+                        name="contractedFacilities"
                         placeholder="e.g., Dr. Ahmed Youssef, Dr. Sarah Ali"
                         />
-                    <span id="affiliatedDoctorsError" class="error"></span>
+                    <span id="contractedFacilitiesError" class="error"></span>
                     <!-- Dynamic center contact fields area -->
-                    <div id="affiliatedDoctorsFields"></div>
+                    <div id="contractedFacilitiesFields"></div>
                     <!-- Button to add more phone fields -->
-                    <button type="button" onclick="affiliatedDoctorsCounter++; createInputField('affiliatedDoctorsFields', 'text', 'Doctor Name', 'e.g., Dr. Ahmed Youssef, Dr. Sarah Ali', false, affiliatedDoctorsCounter)">
+                    <button type="button" onclick="affiliatedDoctorsCounter++; createInputField('contractedFacilitiesFields', 'text', 'Doctor Name', 'e.g., Dr. Ahmed Youssef, Dr. Sarah Ali', false, affiliatedDoctorsCounter)">
                         + Add Doctor
                     </button>
                 </fieldset>
 
-                <fieldset id="contactInformationSection">
-                    <legend>Operational Data</legend>
+                <div class="field-entry">
+                  <label for="digitalCard">Digital Card</label>
+                  <select id="digitalCard" name="digitalCard" data-select data-label="Digital Card" data-error="digitalCardError" required>
+                    <option value="">-- Select --</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                  <span id="digitalCardError" class="error"></span>
+                </div>
 
-                    <label for="employees">Employee Number</label>
-                    <input 
-                    type="number" 
-                    id="employees" 
-                    name="employees" 
-                    placeholder="35 Employees"
-                    required />
-                    
-                    <label for="servicePricing">Service Pricing</label>
-                    <input 
-                    type="text" 
-                    id="servicePricing" 
-                    name="servicePricing" 
-                    placeholder="e.g., Consultation - $50, X-Ray - $30"
-                    required />
-
-                    <label for="serviceFlowMetrics">Flow Metrics</label>
-                    <input 
-                    type="text" 
-                    id="serviceFlowMetrics" 
-                    name="serviceFlowMetrics" 
-                    placeholder="e.g., Avg. wait time: 15 min, Patients/hour: 10"
-                    required />
-                                  
-
-                </fieldset>
+                
 
 
-                <label for="facilityAccreditationDoc">Upload Accreditation Document (PDF, DOC, etc.)</label>
-<input 
-  type="file" 
-  id="facilityAccreditationDoc" 
-  name="facilityAccreditationDoc" 
-  data-file 
-  data-error="docError" 
-  data-label="Accreditation Document"
-  data-allowed="pdf,doc,docx"
-  required />
-<span id="docError" class="error"></span>
-
-<label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
-<input 
-  type="file" 
-  id="safetyAndQuslityCertificate" 
-  name="safetyAndQuslityCertificate" 
-  data-file 
-  data-error="imgError" 
-  data-label="Certificate Image"
-  data-allowed="jpg,jpeg,png"
-  required />
-<span id="imgError" class="error"></span>
                
             </fieldset>
              <!-- ============= End Contact Info (Center) =========== -->
@@ -314,30 +283,7 @@
 
      </div>
     <script src="script.js"></script>
+    <script src="/global function/createInputfilde.js"></script>
+    <script src="/global function/validationfunction.js"></script>
 </body>
 </html>
-
-
-<!--  <label for="facilityAccreditationDoc">Upload Accreditation Document (PDF, DOC, etc.)</label>
-                <input 
-                  type="file" 
-                  id="facilityAccreditationDoc" 
-                  name="facilityAccreditationDoc" 
-                  data-file 
-  data-error="docError" 
-  data-label="Accreditation Document"
-  data-allowed="pdf,doc,docx"
-                  required />
-                <span id="docError" class="error"></span>                        
-                  
-                <label for="safetyAndQuslityCertificate">Upload Certificate Image (JPG, PNG)</label>
-                <input 
-                  type="file" 
-                  id="safetyAndQuslityCertificate" 
-                  name="safetyAndQuslityCertificate" 
-                  data-file 
-  data-error="imgError" 
-  data-label="Certificate Image"
-  data-allowed="jpg,jpeg,png"
-                  required />
-                <span id="imgError" class="error"></span> -->
